@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ModernStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles specific to about page */
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .about-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .about-card h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .about-card h2 i {
+            margin-right: 10px;
+        }
+        
+        .about-card p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .developer-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .developer-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .developer-info .name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        .tech-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .back-home-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 2rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .back-home-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-list li i {
+            color: #48bb78;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .about-card h2 {
+                font-size: 1.3rem;
+            }
+            
+            .developer-info .name {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar (Same as main page) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span>ModernStore</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#order">Order</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#admin" id="adminNavLink">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Hero Section -->
+    <div class="about-hero">
+        <h1><i class="fas fa-info-circle"></i> About ModernStore</h1>
+        <p>Learn more about our project and mission</p>
+    </div>
+
+    <div class="about-content">
+        <!-- Main About Card -->
+        <div class="about-card">
+            <h2><i class="fas fa-rocket"></i> Project Overview</h2>
+            <p>ModernStore is a fully functional e-commerce website built as a learning project to demonstrate cloud-based order management systems. This project showcases how modern web technologies can be used to create a complete online store with real-time cloud storage.</p>
+            <p>The website allows customers to browse products, place orders, and provides administrators with a dashboard to manage all orders from anywhere in the world using cloud storage.</p>
+        </div>
+
+        <!-- Purpose Card -->
+        <div class="about-card">
+            <h2><i class="fas fa-graduation-cap"></i> Purpose of This Project</h2>
+            <p>This project was created for <strong>learning and testing cloud storage systems</strong>. It demonstrates:</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-check-circle"></i> How to integrate Supabase cloud database with a website</li>
+                <li><i class="fas fa-check-circle"></i> Real-time order management across multiple devices</li>
+                <li><i class="fas fa-check-circle"></i> Admin dashboard with password protection</li>
+                <li><i class="fas fa-check-circle"></i> Responsive design for all devices</li>
+                <li><i class="fas fa-check-circle"></i> Local storage backup with cloud synchronization</li>
+                <li><i class="fas fa-check-circle"></i> Deploying websites using GitHub Pages</li>
+            </ul>
+        </div>
+
+        <!-- Technologies Used Card -->
+        <div class="about-card">
+            <h2><i class="fas fa-code"></i> Technologies Used</h2>
+            <div class="tech-stack">
+                <span class="tech-badge">HTML5</span>
+                <span class="tech-badge">CSS3</span>
+                <span class="tech-badge">JavaScript</span>
+                <span class="tech-badge">Supabase (PostgreSQL)</span>
+                <span class="tech-badge">GitHub Pages</span>
+                <span class="tech-badge">Font Awesome Icons</span>
+            </div>
+            <p style="margin-top: 1.5rem;">The website uses <strong>Supabase</strong> as the cloud database, which stores all orders and allows access from any device. The admin dashboard provides real-time order management with search, filter, and status update features.</p>
+        </div>
+
+        <!-- Developer Information Card -->
+        <div class="developer-info">
+            <i class="fas fa-user-circle" style="font-size: 3rem;"></i>
+            <div class="name">Kismat Dahal</div>
+            <h3>Developer & Creator</h3>
+            <p>This website was developed by <strong>Kismat Dahal</strong> as part of a learning journey to understand:</p>
+            <ul class="feature-list" style="color: white; text-align: left; max-width: 400px; margin: 1rem auto;">
+                <li><i class="fas fa-check-circle" style="color: #a0aec0;"></i> Full-stack web development</li>
+                <li><i class="fas fa-check-circle" style="color: #a0aec0;"></i> Cloud database integration</li>
+                <li><i class="fas fa-check-circle" style="color: #a0aec0;"></i> E-commerce functionality</li>
+                <li><i class="fas fa-check-circle" style="color: #a0aec0;"></i> Deploying live websites</li>
+            </ul>
+        </div>
+
+        <!-- Testing Information Card -->
+        <div class="about-card">
+            <h2><i class="fas fa-flask"></i> Testing Cloud Storage System</h2>
+            <p>This project serves as a <strong>testing ground for cloud storage systems</strong>. Key testing features include:</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-cloud-upload-alt"></i> Cross-device order synchronization</li>
+                <li><i class="fas fa-database"></i> Supabase database performance</li>
+                <li><i class="fas fa-sync-alt"></i> Real-time data updates</li>
+                <li><i class="fas fa-shield-alt"></i> Admin authentication system</li>
+                <li><i class="fas fa-mobile-alt"></i> Mobile responsiveness</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Note:</strong> This is a learning project. All orders are stored securely in Supabase cloud and can be accessed from anywhere for testing purposes.</p>
+        </div>
+
+        <!-- Features Card -->
+        <div class="about-card">
+            <h2><i class="fas fa-star"></i> Website Features</h2>
+            <div class="tech-stack">
+                <span class="tech-badge" style="background: #667eea; color: white;">Product Catalog</span>
+                <span class="tech-badge" style="background: #667eea; color: white;">Order Management</span>
+                <span class="tech-badge" style="background: #667eea; color: white;">Admin Dashboard</span>
+                <span class="tech-badge" style="background: #667eea; color: white;">Cloud Storage</span>
+                <span class="tech-badge" style="background: #667eea; color: white;">Real-time Sync</span>
+                <span class="tech-badge" style="background: #667eea; color: white;">Search & Filter</span>
+                <span class="tech-badge" style="background: #667eea; color: white;">Responsive Design</span>
+                <span class="tech-badge" style="background: #667eea; color: white;">Password Protection</span>
+            </div>
+        </div>
+
+        <!-- Back to Home Button -->
+        <div style="text-align: center;">
+            <a href="index.html" class="back-home-btn">
+                <i class="fas fa-home"></i> Back to Home Page
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+        
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

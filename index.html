@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernStore - Premium E-Commerce</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span>ModernStore</span>
+            </div>
+            <ul class="nav-menu">
+    <li><a href="#home" class="nav-link" data-section="home">Home</a></li>
+    <li><a href="#products" class="nav-link" data-section="products">Products</a></li>
+    <li><a href="#order" class="nav-link" data-section="order">Order</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="#" class="nav-link" id="adminNavBtn">Admin</a></li>
+</ul>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Our Online Store</h1>
+            <p>Discover amazing products at unbeatable prices. Quality guaranteed!</p>
+            <button class="cta-btn" onclick="scrollToProducts()">Shop Now <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <h2 class="section-title">Our Premium Products</h2>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section id="order" class="order-section">
+        <div class="container">
+            <h2 class="section-title">Place Your Order</h2>
+            <div class="order-container">
+                <form id="orderForm" class="order-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Customer Name *</label>
+                        <input type="text" id="customerName" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Delivery Address *</label>
+                        <textarea id="address" required placeholder="Enter complete delivery address"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Phone Number *</label>
+                        <input type="tel" id="phone" required placeholder="Enter your phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-box"></i> Select Product *</label>
+                        <select id="productSelect" required>
+                            <option value="">Choose a product</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-sort-amount-up"></i> Quantity *</label>
+                        <input type="number" id="quantity" min="1" value="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Delivery Date *</label>
+                        <input type="date" id="deliveryDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-clock"></i> Time Slot *</label>
+                        <select id="timeSlot" required>
+                            <option value="">Select time slot</option>
+                            <option value="9:00 AM - 12:00 PM">9:00 AM - 12:00 PM</option>
+                            <option value="12:00 PM - 3:00 PM">12:00 PM - 3:00 PM</option>
+                            <option value="3:00 PM - 6:00 PM">3:00 PM - 6:00 PM</option>
+                            <option value="6:00 PM - 9:00 PM">6:00 PM - 9:00 PM</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-dollar-sign"></i> Total Amount</label>
+                        <input type="text" id="totalAmount" readonly disabled>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-check-circle"></i> Submit Order
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard Section (Hidden by default) -->
+    <section id="adminSection" class="admin-section" style="display: none;">
+        <div class="container">
+            <div class="admin-header">
+                <h2 class="section-title">
+                    <i class="fas fa-shield-alt"></i> Admin Dashboard
+                </h2>
+                <button id="closeAdminBtn" class="close-admin-btn">
+                    <i class="fas fa-times"></i> Close Dashboard
+                </button>
+            </div>
+            
+            <!-- Summary Cards -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="stat-value" id="totalOrders">0</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-value" id="pendingOrders">0</div>
+                    <div class="stat-label">Pending Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-value" id="deliveredOrders">0</div>
+                    <div class="stat-label">Delivered Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-value" id="totalSales">$0</div>
+                    <div class="stat-label">Total Sales</div>
+                </div>
+            </div>
+
+            <!-- Admin Controls -->
+            <div class="admin-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by customer name or order ID...">
+                </div>
+                <div class="filter-box">
+                    <select id="statusFilter">
+                        <option value="all">All Orders</option>
+                        <option value="pending">Pending</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+                </div>
+                <button id="refreshAdminBtn" class="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="table-container">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Order Date</th>
+                            <th>Customer Name</th>
+                            <th>Address</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr>
+                            <td colspan="9" class="loading-text">No orders found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="password-modal">
+        <div class="password-modal-content">
+            <div class="password-modal-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Admin Access Required</h2>
+            </div>
+            <div class="password-modal-body">
+                <p>Please enter the admin password to access the dashboard.</p>
+                <div class="password-input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="adminPasswordInput" placeholder="Enter password" autocomplete="off">
+                </div>
+                <div id="passwordError" class="password-error"></div>
+                <button id="submitPasswordBtn" class="password-submit-btn">
+                    <i class="fas fa-unlock-alt"></i> Verify Access
+                </button>
+            </div>
+            <div class="password-modal-footer">
+                <button id="closePasswordModalBtn" class="password-cancel-btn">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <i class="fas fa-question-circle"></i>
+            <h3>Confirm Action</h3>
+            <p id="modalMessage">Are you sure you want to proceed?</p>
+            <div class="modal-buttons">
+                <button id="confirmBtn" class="confirm-btn">Yes</button>
+                <button id="cancelBtn" class="cancel-btn">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SCRIPTS - ORDER MATTERS! DO NOT CHANGE ORDER -->
+    <!-- ========================================== -->
+    
+    <!-- 1. Supabase SDK (MUST be first) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 2. Supabase Config (your keys) -->
+    <script src="supabase-config.js"></script>
+    
+    <!-- 3. Your website scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
