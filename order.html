@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order - ModernStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span>ModernStore</span>
+            </div>
+            
+            <!-- Desktop Navigation Menu -->
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#products" class="nav-link">Products</a></li>
+                <li><a href="order.html" class="nav-link active">Order</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="#" class="nav-link" id="adminNavBtn">Admin</a></li>
+            </ul>
+            
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            
+            <!-- Mobile Navigation Box -->
+            <div class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="order.html">Order</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Order Form Section -->
+    <section id="order" class="order-section" style="margin-top: 70px;">
+        <div class="container">
+            <h2 class="section-title">Place Your Order</h2>
+            <div class="order-container">
+                <form id="orderForm" class="order-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Customer Name *</label>
+                        <input type="text" id="customerName" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Delivery Address *</label>
+                        <textarea id="address" required placeholder="Enter complete delivery address"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Phone Number *</label>
+                        <input type="tel" id="phone" required placeholder="Enter your phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-box"></i> Select Product *</label>
+                        <select id="productSelect" required>
+                            <option value="">Choose a product</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-sort-amount-up"></i> Quantity *</label>
+                        <input type="number" id="quantity" min="1" value="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Delivery Date *</label>
+                        <input type="date" id="deliveryDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-clock"></i> Time Slot *</label>
+                        <select id="timeSlot" required>
+                            <option value="">Select time slot</option>
+                            <option value="9:00 AM - 12:00 PM">9:00 AM - 12:00 PM</option>
+                            <option value="12:00 PM - 3:00 PM">12:00 PM - 3:00 PM</option>
+                            <option value="3:00 PM - 6:00 PM">3:00 PM - 6:00 PM</option>
+                            <option value="6:00 PM - 9:00 PM">6:00 PM - 9:00 PM</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-dollar-sign"></i> Total Amount</label>
+                        <input type="text" id="totalAmount" readonly disabled>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-check-circle"></i> Submit Order
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Store Button -->
+    <div style="text-align: center; padding: 2rem;">
+        <a href="index.html" class="back-home-btn" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none;">
+            <i class="fas fa-arrow-left"></i> Back to Store
+        </a>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            if (mobileMenuBtn && mobileNav) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileNav.classList.toggle('active');
+                    mobileMenuBtn.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function(event) {
+                    if (mobileNav.classList.contains('active')) {
+                        if (!mobileNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                            mobileNav.classList.remove('active');
+                            mobileMenuBtn.classList.remove('active');
+                        }
+                    }
+                });
+            }
+            
+            // Populate products in select dropdown
+            if (typeof products !== 'undefined') {
+                const productSelect = document.getElementById('productSelect');
+                if (productSelect && products.length > 0) {
+                    products.forEach(product => {
+                        const option = document.createElement('option');
+                        option.value = product.id;
+                        option.textContent = `${product.name} - $${product.price}`;
+                        option.setAttribute('data-price', product.price);
+                        productSelect.appendChild(option);
+                    });
+                }
+            }
+            
+            // Set minimum delivery date
+            const dateInput = document.getElementById('deliveryDate');
+            if (dateInput) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                dateInput.min = tomorrow.toISOString().split('T')[0];
+            }
+            
+            // Calculate total on product/quantity change
+            const productSelect = document.getElementById('productSelect');
+            const quantityInput = document.getElementById('quantity');
+            const totalAmount = document.getElementById('totalAmount');
+            
+            function calculateTotal() {
+                if (productSelect.value && quantityInput.value) {
+                    const selectedOption = productSelect.options[productSelect.selectedIndex];
+                    const price = parseFloat(selectedOption.getAttribute('data-price'));
+                    const total = price * parseInt(quantityInput.value);
+                    totalAmount.value = `$${total.toFixed(2)}`;
+                } else {
+                    totalAmount.value = '$0.00';
+                }
+            }
+            
+            if (productSelect) productSelect.addEventListener('change', calculateTotal);
+            if (quantityInput) quantityInput.addEventListener('input', calculateTotal);
+        });
+    </script>
+</body>
+</html>

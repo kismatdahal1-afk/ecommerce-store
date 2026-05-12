@@ -932,3 +932,33 @@ body {
         display: none !important;
     }
 }
+/* Back to Store Button Styles */
+.back-home-btn, .back-to-store-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-home-btn:hover, .back-to-store-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Admin back button */
+.back-to-store-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+}
+
+/* Mobile responsive for back buttons */
+@media (max-width: 768px) {
+    .back-home-btn, .back-to-store-btn {
+        display: block;
+        text-align: center;
+        margin: 0 20px;
+    }
+}

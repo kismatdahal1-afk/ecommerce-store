@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - ModernStore</title>
     <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="responsive.css">   <!-- ADD THIS LINE -->
+    <link rel="stylesheet" href="responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -133,22 +133,35 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar (Same as main page) -->
+    <!-- Navigation Bar - FIXED with proper mobile menu -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
                 <i class="fas fa-store"></i>
                 <span>ModernStore</span>
             </div>
+            
+            <!-- Desktop Navigation Menu -->
             <ul class="nav-menu">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="index.html#products">Products</a></li>
-                <li><a href="index.html#order">Order</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="index.html#admin" id="adminNavLink">Admin</a></li>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#products" class="nav-link">Products</a></li>
+                <li><a href="order.html" class="nav-link">Order</a></li>
+                <li><a href="about.html" class="nav-link active">About</a></li>
+                <li><a href="#" class="nav-link" id="adminNavBtn">Admin</a></li>
             </ul>
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
+            
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            
+            <!-- Mobile Navigation Box -->
+            <div class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="order.html">Order</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -238,30 +251,47 @@
             </div>
         </div>
 
-        <!-- Back to Home Button -->
+        <!-- Back to Store Button - WORKING -->
         <div style="text-align: center;">
             <a href="index.html" class="back-home-btn">
-                <i class="fas fa-home"></i> Back to Home Page
+                <i class="fas fa-arrow-left"></i> Back to Store
             </a>
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
     <script>
-        // Mobile menu toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        if (hamburger && navMenu) {
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
-        }
-        
-        // Close mobile menu on link click
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-            });
+        // Mobile menu toggle for About page - FIXED
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            if (mobileMenuBtn && mobileNav) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileNav.classList.toggle('active');
+                    mobileMenuBtn.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function(event) {
+                    if (mobileNav.classList.contains('active')) {
+                        if (!mobileNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                            mobileNav.classList.remove('active');
+                            mobileMenuBtn.classList.remove('active');
+                        }
+                    }
+                });
+                
+                const mobileLinks = mobileNav.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileNav.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    });
+                });
+            }
         });
     </script>
 </body>

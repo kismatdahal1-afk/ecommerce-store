@@ -5,21 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - ModernStore</title>
     <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="responsive.css">   <!-- ADD THIS LINE -->
+    <link rel="stylesheet" href="responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Admin Navigation -->
+    <!-- Admin Navigation - FIXED with back to store button -->
     <nav class="navbar admin-nav">
         <div class="nav-container">
             <div class="logo">
                 <i class="fas fa-shield-alt"></i>
                 <span>Admin Dashboard</span>
             </div>
-            <button id="logoutBtn" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Back to Store
-            </button>
+            
+            <!-- Back to Store Button (replaces logout) -->
+            <a href="index.html" id="backToStoreBtn" class="back-to-store-btn" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fas fa-store"></i> Back to Store
+            </a>
         </div>
     </nav>
 
@@ -94,6 +96,7 @@
     <!-- Confirmation Modal -->
     <div id="confirmModal" class="confirm-modal">
         <div class="confirm-modal-content">
+            <i class="fas fa-question-circle"></i>
             <h3>Confirm Action</h3>
             <p id="modalMessage">Are you sure you want to proceed?</p>
             <div class="modal-buttons">
@@ -109,7 +112,23 @@
         <p>Processing...</p>
     </div>
 
-    <script src="config.js"></script>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts - ORDER MATTERS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
     <script src="admin.js"></script>
+    
+    <script>
+        // Initialize admin dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof window.refreshAdminDashboard === 'function') {
+                setTimeout(function() {
+                    window.refreshAdminDashboard();
+                }, 500);
+            }
+        });
+    </script>
 </body>
 </html>
