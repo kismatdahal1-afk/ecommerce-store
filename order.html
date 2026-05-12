@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Order - ModernStore</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar - Same as index -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -20,11 +20,11 @@
             
             <!-- Desktop Navigation Menu -->
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="index.html#products" class="nav-link">Products</a></li>
-                <li><a href="order.html" class="nav-link active">Order</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="#" class="nav-link" id="adminNavBtn">Admin</a></li>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="order.html">Order</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#" id="adminNavBtn">Admin</a></li>
             </ul>
             
             <!-- Mobile Menu Button -->
@@ -33,18 +33,18 @@
             <!-- Mobile Navigation Box -->
             <div class="mobile-nav" id="mobileNav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#home">Home</a></li>
                     <li><a href="index.html#products">Products</a></li>
                     <li><a href="order.html">Order</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="admin.html">Admin</a></li>
+                    <li><a href="#" id="mobileAdminBtn">Admin</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Order Form Section -->
-    <section id="order" class="order-section" style="margin-top: 70px;">
+    <section id="order" class="order-section" style="margin-top: 70px; min-height: calc(100vh - 70px);">
         <div class="container">
             <h2 class="section-title">Place Your Order</h2>
             <div class="order-container">
@@ -105,13 +105,6 @@
         </div>
     </section>
 
-    <!-- Back to Store Button -->
-    <div style="text-align: center; padding: 2rem;">
-        <a href="index.html" class="back-home-btn" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none;">
-            <i class="fas fa-arrow-left"></i> Back to Store
-        </a>
-    </div>
-
     <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
@@ -121,13 +114,13 @@
         <p>Processing...</p>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts - ORDER MATTERS for Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
     <script src="script.js"></script>
     
     <script>
-        // Mobile menu toggle
+        // Mobile menu toggle for Order page
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileNav = document.getElementById('mobileNav');
@@ -147,12 +140,32 @@
                         }
                     }
                 });
+                
+                const mobileLinks = mobileNav.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileNav.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    });
+                });
             }
             
-            // Populate products in select dropdown
-            if (typeof products !== 'undefined') {
+            // Handle mobile admin button
+            const mobileAdminBtn = document.getElementById('mobileAdminBtn');
+            if (mobileAdminBtn) {
+                mobileAdminBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const adminNavBtn = document.getElementById('adminNavBtn');
+                    if (adminNavBtn) {
+                        adminNavBtn.click();
+                    }
+                });
+            }
+            
+            // Populate products in select dropdown from existing products array
+            if (typeof products !== 'undefined' && products.length > 0) {
                 const productSelect = document.getElementById('productSelect');
-                if (productSelect && products.length > 0) {
+                if (productSelect) {
                     products.forEach(product => {
                         const option = document.createElement('option');
                         option.value = product.id;
@@ -177,12 +190,12 @@
             const totalAmount = document.getElementById('totalAmount');
             
             function calculateTotal() {
-                if (productSelect.value && quantityInput.value) {
+                if (productSelect && productSelect.value && quantityInput && quantityInput.value) {
                     const selectedOption = productSelect.options[productSelect.selectedIndex];
                     const price = parseFloat(selectedOption.getAttribute('data-price'));
                     const total = price * parseInt(quantityInput.value);
-                    totalAmount.value = `$${total.toFixed(2)}`;
-                } else {
+                    if (totalAmount) totalAmount.value = `$${total.toFixed(2)}`;
+                } else if (totalAmount) {
                     totalAmount.value = '$0.00';
                 }
             }

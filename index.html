@@ -11,6 +11,7 @@
 </head>
 <body>
     <!-- Navigation Bar -->
+        <!-- Navigation Bar - FIXED for mobile across all pages -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -20,24 +21,24 @@
             
             <!-- Desktop Navigation Menu -->
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link" data-section="home">Home</a></li>
-                <li><a href="#products" class="nav-link" data-section="products">Products</a></li>
-                <li><a href="#order" class="nav-link" data-section="order">Order</a></li>
+                <li><a href="index.html#home" class="nav-link" data-section="home">Home</a></li>
+                <li><a href="index.html#products" class="nav-link" data-section="products">Products</a></li>
+                <li><a href="order.html" class="nav-link" data-section="order">Order</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="#" class="nav-link" id="adminNavBtn">Admin</a></li>
             </ul>
             
-            <!-- Mobile Menu Button (ONLY ONE) -->
+            <!-- Mobile Menu Button -->
             <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
             
-            <!-- Mobile Navigation Box (Right Side Small Menu) -->
+            <!-- Mobile Navigation Box (appears on right side) -->
             <div class="mobile-nav" id="mobileNav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#products">Products</a></li>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
                     <li><a href="order.html">Order</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="admin.html">Admin</a></li>
+                    <li><a href="#" id="mobileAdminBtn">Admin</a></li>
                 </ul>
             </div>
         </div>
@@ -257,11 +258,47 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <!-- 2. Supabase Config (your keys) -->
-    <script src="supabase-config.js"></script>
-    
-    <!-- 3. Your website scripts -->
-    <script src="config.js"></script>
-    <script src="script.js"></script>
-    <script src="admin.js"></script>
-</body>
-</html>
+    <script>
+        // Mobile menu toggle - makes navigation work on all pages
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            if (mobileMenuBtn && mobileNav) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileNav.classList.toggle('active');
+                    mobileMenuBtn.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function(event) {
+                    if (mobileNav.classList.contains('active')) {
+                        if (!mobileNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                            mobileNav.classList.remove('active');
+                            mobileMenuBtn.classList.remove('active');
+                        }
+                    }
+                });
+                
+                const mobileLinks = mobileNav.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileNav.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    });
+                });
+            }
+            
+            // Handle mobile admin button
+            const mobileAdminBtn = document.getElementById('mobileAdminBtn');
+            if (mobileAdminBtn) {
+                mobileAdminBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const adminNavBtn = document.getElementById('adminNavBtn');
+                    if (adminNavBtn) {
+                        adminNavBtn.click();
+                    }
+                });
+            }
+        });
+    </script>

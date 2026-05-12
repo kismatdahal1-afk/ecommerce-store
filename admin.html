@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Admin Dashboard - ModernStore</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
@@ -10,22 +10,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Admin Navigation - FIXED with back to store button -->
-    <nav class="navbar admin-nav">
+    <!-- Standard Navigation Bar - Same as other pages -->
+    <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <i class="fas fa-shield-alt"></i>
-                <span>Admin Dashboard</span>
+                <i class="fas fa-store"></i>
+                <span>ModernStore</span>
             </div>
             
-            <!-- Back to Store Button (replaces logout) -->
-            <a href="index.html" id="backToStoreBtn" class="back-to-store-btn" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-                <i class="fas fa-store"></i> Back to Store
-            </a>
+            <!-- Desktop Navigation Menu -->
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="order.html">Order</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#" class="active" id="adminNavBtn">Admin</a></li>
+            </ul>
+            
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            
+            <!-- Mobile Navigation Box -->
+            <div class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="order.html">Order</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#" id="mobileAdminBtn">Admin</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="admin-container">
+    <div class="admin-container" style="margin-top: 80px; padding: 20px;">
         <!-- Summary Cards -->
         <div class="stats-grid" id="statsGrid">
             <div class="stat-card">
@@ -68,9 +86,9 @@
             </button>
         </div>
 
-        <!-- Orders Table -->
-        <div class="table-container">
-            <table class="orders-table">
+        <!-- Orders Table - Responsive for mobile -->
+        <div class="table-container" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table class="orders-table" style="min-width: 600px; width: 100%;">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -86,10 +104,34 @@
                 </thead>
                 <tbody id="ordersTableBody">
                     <tr>
-                        <td colspan="9" class="loading-text">Loading orders...</td>
+                        <td colspan="9" class="loading-text">Loading orders from cloud...</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="password-modal">
+        <div class="password-modal-content">
+            <div class="password-modal-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Admin Access Required</h2>
+            </div>
+            <div class="password-modal-body">
+                <p>Please enter the admin password to access the dashboard.</p>
+                <div class="password-input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="adminPasswordInput" placeholder="Enter password" autocomplete="off">
+                </div>
+                <div id="passwordError" class="password-error"></div>
+                <button id="submitPasswordBtn" class="password-submit-btn">
+                    <i class="fas fa-unlock-alt"></i> Verify Access
+                </button>
+            </div>
+            <div class="password-modal-footer">
+                <button id="closePasswordModalBtn" class="password-cancel-btn">Cancel</button>
+            </div>
         </div>
     </div>
 
@@ -115,20 +157,53 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
-    <!-- Scripts - ORDER MATTERS -->
+    <!-- Scripts - ORDER MATTERS for Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
     <script src="admin.js"></script>
+    <script src="script.js"></script>
     
     <script>
-        // Initialize admin dashboard
+        // Mobile menu toggle for Admin page
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof window.refreshAdminDashboard === 'function') {
-                setTimeout(function() {
-                    window.refreshAdminDashboard();
-                }, 500);
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            if (mobileMenuBtn && mobileNav) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileNav.classList.toggle('active');
+                    mobileMenuBtn.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', function(event) {
+                    if (mobileNav.classList.contains('active')) {
+                        if (!mobileNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                            mobileNav.classList.remove('active');
+                            mobileMenuBtn.classList.remove('active');
+                        }
+                    }
+                });
+                
+                const mobileLinks = mobileNav.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileNav.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    });
+                });
             }
         });
+        
+        // Auto-show password modal when admin page loads (if not authenticated)
+        setTimeout(function() {
+            const adminNavBtn = document.getElementById('adminNavBtn');
+            if (adminNavBtn && document.getElementById('passwordModal')) {
+                // Trigger admin modal to show
+                const event = new Event('click');
+                adminNavBtn.dispatchEvent(event);
+            }
+        }, 500);
     </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>About Us - ModernStore</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
@@ -87,23 +87,6 @@
             font-size: 0.9rem;
         }
         
-        .back-home-btn {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            margin-top: 2rem;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
-        
-        .back-home-btn:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-        }
-        
         .feature-list {
             list-style: none;
             padding: 0;
@@ -143,11 +126,11 @@
             
             <!-- Desktop Navigation Menu -->
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="index.html#products" class="nav-link">Products</a></li>
-                <li><a href="order.html" class="nav-link">Order</a></li>
-                <li><a href="about.html" class="nav-link active">About</a></li>
-                <li><a href="#" class="nav-link" id="adminNavBtn">Admin</a></li>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="order.html">Order</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#" id="adminNavBtn">Admin</a></li>
             </ul>
             
             <!-- Mobile Menu Button -->
@@ -156,11 +139,11 @@
             <!-- Mobile Navigation Box -->
             <div class="mobile-nav" id="mobileNav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#home">Home</a></li>
                     <li><a href="index.html#products">Products</a></li>
                     <li><a href="order.html">Order</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="admin.html">Admin</a></li>
+                    <li><a href="#" id="mobileAdminBtn">Admin</a></li>
                 </ul>
             </div>
         </div>
@@ -251,10 +234,10 @@
             </div>
         </div>
 
-        <!-- Back to Store Button - WORKING -->
+        <!-- Back to Home Button -->
         <div style="text-align: center;">
-            <a href="index.html" class="back-home-btn">
-                <i class="fas fa-arrow-left"></i> Back to Store
+            <a href="index.html" class="back-home-btn" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; margin-top: 1rem;">
+                <i class="fas fa-home"></i> Back to Home
             </a>
         </div>
     </div>
@@ -262,8 +245,9 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
+    <script src="script.js"></script>
     <script>
-        // Mobile menu toggle for About page - FIXED
+        // Mobile menu toggle for About page
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileNav = document.getElementById('mobileNav');
@@ -290,6 +274,18 @@
                         mobileNav.classList.remove('active');
                         mobileMenuBtn.classList.remove('active');
                     });
+                });
+            }
+            
+            // Handle mobile admin button
+            const mobileAdminBtn = document.getElementById('mobileAdminBtn');
+            if (mobileAdminBtn) {
+                mobileAdminBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const adminNavBtn = document.getElementById('adminNavBtn');
+                    if (adminNavBtn) {
+                        adminNavBtn.click();
+                    }
                 });
             }
         });
