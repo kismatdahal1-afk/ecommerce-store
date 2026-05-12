@@ -290,3 +290,32 @@ function setupEventListeners() {
         });
     });
 }
+// ========== ALL YOUR EXISTING JAVASCRIPT CODE ABOVE HERE ==========
+
+// === PASTE THE MOBILE MENU JAVASCRIPT CODE HERE (at the bottom) ===
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    if (mobileMenuBtn && mobileNav) {
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileNav.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (!mobileNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                mobileNav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            }
+        });
+        
+        const mobileLinks = mobileNav.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            });
+        });
+    }
+});

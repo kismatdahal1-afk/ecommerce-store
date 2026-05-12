@@ -812,3 +812,101 @@ body {
         width: 95%;
     }
 }
+/* ========== ALL YOUR EXISTING CSS CODE ABOVE HERE ========== */
+
+/* === PASTE THE MOBILE MENU CSS CODE HERE (at the bottom) === */
+@media (max-width: 768px) {
+    .navbar ul {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--primary, #667eea);
+        padding: 10px;
+    }
+    
+    .mobile-menu-btn.active {
+        color: var(--secondary, #764ba2);
+    }
+    
+    .mobile-nav {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        padding: 0;
+        min-width: 200px;
+        max-width: 280px;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .mobile-nav.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .mobile-nav ul {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 0;
+    }
+    
+    .mobile-nav ul li {
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .mobile-nav ul li:last-child {
+        border-bottom: none;
+    }
+    
+    .mobile-nav ul li a {
+        display: block;
+        padding: 14px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        background: white;
+    }
+    
+    .mobile-nav ul li a:hover {
+        background: #f5f5f5;
+        color: var(--primary, #667eea);
+        padding-left: 24px;
+    }
+    
+    .mobile-nav ul li a.active {
+        background: var(--primary, #667eea);
+        color: white;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu-btn {
+        display: none;
+    }
+    
+    .mobile-nav {
+        display: none;
+    }
+}
