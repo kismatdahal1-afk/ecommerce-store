@@ -292,30 +292,44 @@ function setupEventListeners() {
 }
 // ========== ALL YOUR EXISTING JAVASCRIPT CODE ABOVE HERE ==========
 
-// === PASTE THE MOBILE MENU JAVASCRIPT CODE HERE (at the bottom) ===
+// ========== MOBILE MENU TOGGLE - FIXED VERSION ==========
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileNav = document.getElementById('mobileNav');
     
     if (mobileMenuBtn && mobileNav) {
-        mobileMenuBtn.addEventListener('click', function() {
+        // Toggle menu when button is clicked
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             mobileNav.classList.toggle('active');
             mobileMenuBtn.classList.toggle('active');
         });
         
+        // Close menu when clicking outside
         document.addEventListener('click', function(event) {
-            if (!mobileNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
-                mobileNav.classList.remove('active');
-                mobileMenuBtn.classList.remove('active');
+            if (mobileNav.classList.contains('active')) {
+                if (!mobileNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                    mobileNav.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
             }
         });
         
+        // Close menu when a link is clicked
         const mobileLinks = mobileNav.querySelectorAll('a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', function() {
                 mobileNav.classList.remove('active');
                 mobileMenuBtn.classList.remove('active');
             });
+        });
+        
+        // Close menu on window resize (if switching to desktop)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                mobileNav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            }
         });
     }
 });

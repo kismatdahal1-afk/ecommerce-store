@@ -814,99 +814,121 @@ body {
 }
 /* ========== ALL YOUR EXISTING CSS CODE ABOVE HERE ========== */
 
-/* === PASTE THE MOBILE MENU CSS CODE HERE (at the bottom) === */
+/* ========== MOBILE MENU STYLES - FIXED VERSION ========== */
+
+/* Hide desktop nav menu on mobile */
 @media (max-width: 768px) {
-    .navbar ul {
-        display: none;
+    .nav-menu {
+        display: none !important;
     }
     
+    /* Mobile menu button - visible on mobile */
     .mobile-menu-btn {
-        display: block;
-        background: none;
+        display: block !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
-        font-size: 28px;
+        font-size: 24px;
         cursor: pointer;
-        color: var(--primary, #667eea);
-        padding: 10px;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        z-index: 1001;
+    }
+    
+    .mobile-menu-btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%);
     }
     
     .mobile-menu-btn.active {
-        color: var(--secondary, #764ba2);
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
     
+    /* Mobile navigation box - small, right side, below button */
     .mobile-nav {
         position: absolute;
-        top: 70px;
+        top: 80px;
         right: 20px;
         background: white;
         border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         padding: 0;
         min-width: 200px;
-        max-width: 280px;
+        max-width: 260px;
         z-index: 1000;
         opacity: 0;
         visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
+        transform: translateY(-15px) scale(0.95);
+        transition: all 0.25s ease;
         overflow: hidden;
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.08);
     }
     
+    /* Show mobile menu when active */
     .mobile-nav.active {
         opacity: 1;
         visibility: visible;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
     
+    /* Mobile navigation list - vertical stacked */
     .mobile-nav ul {
-        display: flex;
-        flex-direction: column;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        gap: 0;
+        display: flex !important;
+        flex-direction: column !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
     }
     
+    /* Mobile navigation items */
     .mobile-nav ul li {
-        margin: 0;
-        padding: 0;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
+        margin: 0 !important;
+        padding: 0 !important;
+        border-bottom: 1px solid #eee;
     }
     
     .mobile-nav ul li:last-child {
         border-bottom: none;
     }
     
+    /* Mobile navigation links */
     .mobile-nav ul li a {
-        display: block;
-        padding: 14px 20px;
-        font-size: 16px;
-        font-weight: 500;
-        color: #333;
-        text-decoration: none;
-        transition: all 0.25s ease;
-        background: white;
+        display: block !important;
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        color: #333 !important;
+        text-decoration: none !important;
+        transition: all 0.25s ease !important;
+        background: white !important;
+        text-align: left !important;
     }
     
+    /* Hover effect for mobile links */
     .mobile-nav ul li a:hover {
-        background: #f5f5f5;
-        color: var(--primary, #667eea);
-        padding-left: 24px;
+        background: #f8f9fa !important;
+        color: #667eea !important;
+        padding-left: 28px !important;
     }
     
-    .mobile-nav ul li a.active {
-        background: var(--primary, #667eea);
-        color: white;
+    /* Container positioning for mobile */
+    .nav-container {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 }
 
+/* Hide mobile button on desktop */
 @media (min-width: 769px) {
     .mobile-menu-btn {
-        display: none;
+        display: none !important;
     }
     
     .mobile-nav {
-        display: none;
+        display: none !important;
     }
 }
